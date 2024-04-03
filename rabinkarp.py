@@ -1,26 +1,22 @@
-
 def check(s1, s2):
     for i in range(len(s1)):
+        print(s1, s2)
         if s1[i] != s2[i]:
             return False
     return True
-
 def find(string, pattern):
-    if len(string) < len(pattern):
-        return "Match not found"
-    
-    psum = sum([ord(char)-96 for char in pattern])
-
-    for i in range(len(string)-len(pattern)): 
-        current = string[i: i+len(pattern)]
-        csum = sum([ord(char) - 96 for char in current])
-        if csum == psum:
+    psum = sum([ord(char) for char in pattern])
+    ssum = sum([ord(char) for char in string[:len(pattern)]])
+    for i in range(0, len(string)-len(pattern)+1):
+        if i != 0:
+            ssum += ord(string[i+len(pattern)-1]) 
+        current = string[i : i + len(pattern)]
+        if ssum == psum:
             if check(current, pattern):
-                return f"Match found at index {i}"
-        csum += ord(stirng[i+len(pattern)]) - 96
-        csum -= ord(string[i]) + 96
-    return "Match not found"
-    
+                return f'match found at index {i}'
+        ssum -= ord(string[i])
+    return False
+
 
 string = "ccaccaaedba"
 pattern = "dba"
